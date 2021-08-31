@@ -1,6 +1,7 @@
 package com.potoware.appfacturas.modelo;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Factura {
@@ -65,12 +66,11 @@ public class Factura {
     }
 
     public float calcularTotal() {
+
         float total = 0f;
-        for (ItemFactura item : this.items) {
-            if (item == null) {
-                continue;
-            }
-            total += item.calcularImporte();
+        for (int i = 0; i < indiceItem; i++) {
+
+            total += this.items[i].calcularImporte();
         }
         return total;
 
@@ -92,25 +92,19 @@ public class Factura {
                 .append("\n#\tNombre\t$\tCant.\tTotal\n");
 
 
-        for (ItemFactura item :this.items) {
-         if(item ==null){
-             continue;
-         }
-         sb.append(item.getProducto().getCodigo())
-                 .append("\t")
-                 .append(item.getProducto().getNombre())
-                 .append("\t")
-                 .append(item.getProducto().getPrecio())
-                 .append("\t")
-                 .append(item.getCantidad())
-                 .append("\t")
-                 .append(item.calcularImporte())
-                 .append("\n");
+        for (int i = 0; i < indiceItem; i++) {
+            sb.append(this.items[i].toString())
+                    .append("\n");
 
         }
         sb.append("\nGran total: ")
                 .append(calcularTotal());
 
         return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return generarDetalle();
     }
 }
